@@ -14,5 +14,6 @@ class ToDo extends Model
         'priority',
         'created_date',
         'status'
+        //,'completion_date'
     ];
 }
