@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Http\Request;
 class ToDoRequest extends FormRequest
 {
     /**
@@ -13,7 +13,7 @@ class ToDoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,9 +25,9 @@ class ToDoRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'priority' => 'required|string|max:20',
-            'status' => 'required|string|max:20'
+            'description' => 'nullable|string|max:255',
+            'priority' => 'string|max:20',
+            'status' => 'string|max:20'
         ];
     }
 }

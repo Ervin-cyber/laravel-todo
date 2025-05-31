@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ToDoRequest;
 use App\Models\ToDo;
+use Log;
 
 class ToDoController extends Controller
 {
@@ -14,18 +15,24 @@ class ToDoController extends Controller
     }
     public function add(ToDoRequest $request)
     {
-        ToDo::create($request->validated());
+        ToDo::create($request->all());
         return redirect('/');
     }
-    public function edit(ToDoRequest $request, ToDo $todo)
+    public function save(ToDoRequest $request)
     {
-        $validatedRequest = $request->validated();
-        $todo->update(['title' => $validatedRequest->only('title'), 'description' => $validatedRequest->only('description'), 'priority' => $validatedRequest->only('priority'), 'status' => $validatedRequest->only('status')]);
+        ToDo::where('id', $request->only('id'))
+            ->update(['title' => $request->get('title'), 'description' => $request->get('description')]);
         return redirect('/');
     }
-    public function delete(ToDo $todo)
+    public function edit(ToDo $todo)
     {
-        $todo->delete();
+        //$todo->update(['title' => $validatedRequest->only('title'), 'description' => $validatedRequest->only('description'), 'priority' => $validatedRequest->only('priority'), 'status' => $validatedRequest->only('status')]);
+        $todos = ToDo::all();
+        return view('welcome', compact('todos'));
+    }
+    public function delete($id)
+    {
+        ToDo::find($id)->delete();
         return redirect('/');
     }
     public function markAsCompleted(ToDo $todo)
