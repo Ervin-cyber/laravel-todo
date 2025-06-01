@@ -16,9 +16,10 @@
                 value="{{ request('todo')->description }}">
             <label for="priority">Priority</label>
             <select name="priority">
-                <option>P0 (high)</option>
-                <option>P1 (medium)</option>
-                <option>P2 (low)</option>
+                <option></option>
+                <option {{ request('todo')->priority == 'P0 (high)' ? 'selected' : '' }}>P0 (high)</option>
+                <option {{ request('todo')->priority == 'P1 (medium)' ? 'selected' : '' }}>P1 (medium)</option>
+                <option {{ request('todo')->priority == 'P2 (low)' ? 'selected' : '' }}>P2 (low)</option>
             </select>
             <button>Save</button>
         </form>
@@ -39,33 +40,34 @@
     @endif
     <h2>My ToDos</h2>
     <h3>Filter by</h3>
-    <div style="display:flex; flex-direction: row; align-items: center; gap: 6px;">
-        <span>Priority</span>
-        <select name="priority">
-            <option></option>
-            <option>P0 (high)</option>
-            <option>P1 (medium)</option>
-            <option>P2 (low)</option>
-        </select>
+    <form action="/" method="GET">
+        <div style="display:flex; flex-direction: row; align-items: center; gap: 6px;">
+            <span>Priority</span>
+            <label for="priority">Priority</label>
+            <select name="priority">
+                <option></option>
+                <option {{ request('priority') == 'P0 (high)' ? 'selected' : '' }}>P0 (high)</option>
+                <option {{ request('priority') == 'P1 (medium)' ? 'selected' : '' }}>P1 (medium)</option>
+                <option {{ request('priority') == 'P2 (low)' ? 'selected' : '' }}>P2 (low)</option>
+            </select>
+        </div>
+        <div style="display:flex; flex-direction: row; align-items: center; gap: 6px;">
+            <span>Status</span>
+            <select name="status">
+                <option></option>
+                <option {{ request('status') == 'Completed' ? 'selected' : '' }}>Completed</option>
+                <option {{ request('status') == 'In progress' ? 'selected' : '' }}>In progress</option>
+            </select>
+        </div>
+        <div style="display:flex; flex-direction: row; align-items: center; gap: 6px;">
+            <span>Created date</span>
+            <label for="from">From</label>
+            <input type="date" name="dateFrom" value="{{ request('dateFrom') }}"> <br>
+            <label for="to">To</label>
+            <input type="date" name="dateTo" value="{{ request('dateTo') }}">
+        </div>
         <button type="submit">Filter</button>
-    </div>
-    <div style="display:flex; flex-direction: row; align-items: center; gap: 6px;">
-        <span>Status</span>
-        <select name="status">
-            <option></option>
-            <option>Completed</option>
-            <option>In progress</option>
-        </select>
-        <button type="submit">Filter</button>
-    </div>
-    <div style="display:flex; flex-direction: row; align-items: center; gap: 6px;">
-        <span>Created date</span>
-        <label for="from">From</label>
-        <input type="date" name="from"> <br>
-        <label for="to">To</label>
-        <input type="date" name="to">
-        <button type="submit">Filter</button>
-    </div>
+    </form>
     <form>
         @csrf
         <input type="text" name="search" placeholder="Search ToDo">
@@ -91,7 +93,9 @@
                 <th>{{ $todo->priority }}</th>
                 <th>{{ $todo->created_date }}</th>
                 <th>
-                    <form action="/todo/{{ $todo->id }}&{{ $todo->title }}&{{ $todo->description ?? '' }}" method="POST">
+                    <form
+                        action="/todo/{{ $todo->id }}&{{ $todo->title }}&{{ $todo->description ?? '' }}&{{ $todo->priority }}"
+                        method="POST">
                         @csrf
                         @method('PUT')
                         <button>Edit</button>
