@@ -41,36 +41,38 @@
     <h2>My ToDos</h2>
     <h3>Filter by</h3>
     <form action="/" method="GET">
-        <div style="display:flex; flex-direction: row; align-items: center; gap: 6px;">
-            <span>Priority</span>
-            <label for="priority">Priority</label>
-            <select name="priority">
-                <option></option>
-                <option {{ request('priority') == 'P0 (high)' ? 'selected' : '' }}>P0 (high)</option>
-                <option {{ request('priority') == 'P1 (medium)' ? 'selected' : '' }}>P1 (medium)</option>
-                <option {{ request('priority') == 'P2 (low)' ? 'selected' : '' }}>P2 (low)</option>
-            </select>
+        <div style="display:flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div style="display:flex; flex-direction: row; align-items: center; gap: 6px;">
+                <span>Priority</span>
+                <label for="priority">Priority</label>
+                <select name="priority">
+                    <option></option>
+                    <option {{ request('priority') == 'P0 (high)' ? 'selected' : '' }}>P0 (high)</option>
+                    <option {{ request('priority') == 'P1 (medium)' ? 'selected' : '' }}>P1 (medium)</option>
+                    <option {{ request('priority') == 'P2 (low)' ? 'selected' : '' }}>P2 (low)</option>
+                </select>
+            </div>
+            <div style="display:flex; flex-direction: row; align-items: center; gap: 6px;">
+                <span>Status</span>
+                <select name="status">
+                    <option></option>
+                    <option {{ request('status') == 'Completed' ? 'selected' : '' }}>Completed</option>
+                    <option {{ request('status') == 'In progress' ? 'selected' : '' }}>In progress</option>
+                </select>
+            </div>
+            <div style="display:flex; flex-direction: row; align-items: center; gap: 6px;">
+                <span>Created date</span>
+                <label for="from">From</label>
+                <input type="date" name="dateFrom" value="{{ request('dateFrom') }}"> <br>
+                <label for="to">To</label>
+                <input type="date" name="dateTo" value="{{ request('dateTo') }}">
+            </div>
+            <button type="submit">Filter</button>
         </div>
-        <div style="display:flex; flex-direction: row; align-items: center; gap: 6px;">
-            <span>Status</span>
-            <select name="status">
-                <option></option>
-                <option {{ request('status') == 'Completed' ? 'selected' : '' }}>Completed</option>
-                <option {{ request('status') == 'In progress' ? 'selected' : '' }}>In progress</option>
-            </select>
-        </div>
-        <div style="display:flex; flex-direction: row; align-items: center; gap: 6px;">
-            <span>Created date</span>
-            <label for="from">From</label>
-            <input type="date" name="dateFrom" value="{{ request('dateFrom') }}"> <br>
-            <label for="to">To</label>
-            <input type="date" name="dateTo" value="{{ request('dateTo') }}">
-        </div>
-        <button type="submit">Filter</button>
     </form>
     <form>
         @csrf
-        <input type="text" name="search" placeholder="Search ToDo">
+        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search ToDo">
         <button type="submit">Search</button>
     </form>
     <table>
