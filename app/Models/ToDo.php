@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class ToDo extends Model
 {
     use HasFactory;
+    const CREATED_AT = 'created_date';
+
     protected $fillable = [
         'title',
         'description',
         'priority',
-        'created_date',
         'status'
-        //,'completion_date'
     ];
+    public $timestamps = true;
 }

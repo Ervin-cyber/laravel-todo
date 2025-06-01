@@ -104,7 +104,17 @@
                         <button>Delete</button>
                     </form>
                 </th>
-                <th>Mark as completed</th>
+                <th>
+                    {{ $todo->status }}
+                    @if($todo->status == 'In progress')
+                        <form action="/completed/{{ $todo->id }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" name="id" value="{{ $todo->id }}">
+                            <button>Mark as completed</button>
+                        </form>
+                    @endif
+                </th>
             </tr>
         @endforeach
     </table>
