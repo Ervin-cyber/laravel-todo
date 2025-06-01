@@ -5,7 +5,11 @@
 </style>
 
 <div style="display:flex; flex-direction: column; align-items: center; gap: 6px;">
-    <h1>My ToDo application</h1>
+    <h1>
+        <a href="/">
+            My ToDo application
+        </a>
+    </h1>
     @if(Request::is('todo/*'))
         <h2>Edit ToDo</h2>
         <form action="/update" method="POST">
@@ -104,7 +108,8 @@
                     </form>
                 </th>
                 <th>
-                    <form action="/todo/{{ $todo->id }}" method="POST">
+                    <form action="/todo/{{ $todo->id }}" method="POST"
+                        onsubmit="return confirm('Are you sure you want to delete it?');">
                         @csrf
                         @method('DELETE')
                         <button>Delete</button>
