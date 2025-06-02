@@ -48,7 +48,6 @@
         <div style="display:flex; flex-direction: column; align-items: center; gap: 6px;">
             <div style="display:flex; flex-direction: row; align-items: center; gap: 6px;">
                 <span>Priority</span>
-                <label for="priority">Priority</label>
                 <select name="priority">
                     <option></option>
                     <option {{ request('priority') == 'P0 (high)' ? 'selected' : '' }}>P0 (high)</option>
@@ -99,13 +98,15 @@
                 <th>{{ $todo->priority }}</th>
                 <th>{{ $todo->created_date }}</th>
                 <th>
-                    <form
-                        action="/todo/{{ $todo->id }}&{{ $todo->title }}&{{ $todo->description ?? '' }}&{{ $todo->priority }}"
-                        method="POST">
-                        @csrf
-                        @method('PUT')
-                        <button>Edit</button>
-                    </form>
+                    @if($todo->status == 'In progress')
+                        <form
+                            action="/todo/{{ $todo->id }}&{{ $todo->title }}&{{ $todo->description ?? '' }}&{{ $todo->priority }}"
+                            method="POST">
+                            @csrf
+                            @method('PUT')
+                            <button>Edit</button>
+                        </form>
+                    @endif
                 </th>
                 <th>
                     <form action="/todo/{{ $todo->id }}" method="POST"

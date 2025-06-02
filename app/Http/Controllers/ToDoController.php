@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ToDoRequest;
 use App\Models\ToDo;
 use DB;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Http\Request;
 
 class ToDoController extends Controller
@@ -37,7 +38,6 @@ class ToDoController extends Controller
         }
 
         $todos = $query->get();
-
         return view('welcome', compact('todos'));
     }
     public function add(ToDoRequest $request)
@@ -65,6 +65,21 @@ class ToDoController extends Controller
     {
         ToDo::where('id', $id)
             ->update(['status' => 'Completed']);
+        return redirect('/');
+    }
+    public function random()
+    {
+        ToDo::factory(5)
+            ->state(new Sequence(
+                ['status' => 'Completed'],
+                ['status' => 'In progress'],
+            ))
+            ->state(new Sequence(
+                ['priority' => 'P0 (high)'],
+                ['priority' => 'P1 (medium)'],
+                ['priority' => 'P2 (low)'],
+            ))
+            ->create();
         return redirect('/');
     }
 }
