@@ -17,8 +17,8 @@ return new class extends Migration {
             $table->string('title');
             $table->string('description')->nullable();
             $table->string('priority');
-            $table->timestamp('created_date');
-            $table->boolean('status');
+            $table->string('created_date');
+            $table->string('status')->default('In progress');
             $table->timestamps();
         });
     }
