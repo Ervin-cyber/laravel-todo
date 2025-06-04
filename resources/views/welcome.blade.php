@@ -76,13 +76,9 @@
                 <label for="to">To</label>
                 <input type="date" name="dateTo" value="{{ request('dateTo') }}">
             </div>
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search ToDo">
             <button type="submit">Filter</button>
         </div>
-    </form>
-    <form>
-        @csrf
-        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search ToDo">
-        <button type="submit">Search</button>
     </form>
     <table>
         <tr>

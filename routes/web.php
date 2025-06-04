@@ -20,4 +20,4 @@ Route::post('/update', [ToDoController::class, 'save']);
 Route::put('/todo/{todo}', [ToDoController::class, 'edit']);
 Route::put('/completed/{id}', [ToDoController::class, 'completed']);
 Route::delete('/todo/{id}', [ToDoController::class, 'delete']);
-Route::get('/random', [ToDoController::class, 'random']);
+Route::get('/generate', [ToDoController::class, 'random']);
